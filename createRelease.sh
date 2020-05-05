@@ -42,7 +42,7 @@ read -p "Branch created successfully. Push now to origin? [y/N]" pushnow
 if [ "$pushnow" == "y" ]
 then
     echo "Pushing to origin..."
-    git push -u origin "release-$version"
+    git push --follow-tags -u origin "release-$version"
 fi
 
 echo "Created new branch \"release-$version\". Make sure that all builds and tests succeed, then merge into master!"
