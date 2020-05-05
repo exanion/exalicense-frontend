@@ -38,11 +38,12 @@ git add package*.json
 git commit -m "Created release branch for version $version"
 git tag "$version"
 
-read -p "Branch created successfully. Push now to origin? [y/N]" pushnow
+read -p "Branch created successfully. Push now to origin? [y/N] " pushnow
 if [ "$pushnow" == "y" ]
 then
     echo "Pushing to origin..."
-    git push --follow-tags -u origin "release-$version"
+    git push -u origin "release-$version"
+    git push --tags
 fi
 
 echo "Created new branch \"release-$version\". Make sure that all builds and tests succeed, then merge into master!"

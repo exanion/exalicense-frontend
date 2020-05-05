@@ -15,17 +15,19 @@ branches:
   only:
     - dev
     - /^release-.*$/
+    - /[\d]+\.[\d]+\.[\d]/
 cache:
   directories:
     - node_modules
 deploy:
     provider: releases
     body: Relase $VERSION
-    api_key:
-        secure: $GITHUB_DEPLOY_KEY
+    skip_cleanup: true
+    api_key: $GITHUB_DEPLOY_KEY
     file: exalicense-frontend-$VERSION.tar.gz
+    draft: true
     on:
-        branch: /^release-.*$/
+        tags: true
 before_install:
     - export VERSION=$(cat VERSION)
     - npm update
@@ -34,4 +36,5 @@ install:
     - npm install
 script:
     - npm run build
-    - tar -czvf exalicense-frontend-$VERSION.tar.gz build
+    - mv build exalicense-frontend
+    - tar -czvf exalicense-frontend-$VERSION.tar.gz exalicense-frontend
